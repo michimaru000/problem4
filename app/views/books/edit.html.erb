@@ -1,0 +1,25 @@
+  <% if @book.errors.any? %>
+    <%= @book.errors.count %>件のerrorが発生しました
+    <ul>
+     <% @book.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+     <% end %>
+    </ul>
+  <% end %>
+ 
+ <h2>Editing Book</h2>
+   <%= form_with model: @book do |f| %>
+     <label for="inputName">Title</label>
+     <%= f.text_field :title, autofocus: true, id:"inputName", placeholder:"タイトル" %>
+     <label for="inputName">Opinion</label>
+     <%= f.text_field :body,autofocus: true, id:"inputName", placeholder:"Opinion" %> 
+     <%= f.submit "Update Book" %>
+     
+   <% end %>
+   
+   <li>
+      <%= link_to "Show", book_path(@book.id) %>
+   </li>
+   <li><%= link_to "Back", "/books" %></li>
+   
+  
