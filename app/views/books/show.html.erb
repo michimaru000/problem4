@@ -1,4 +1,4 @@
-<%= notice %>  
+<%= notice %>
 <main>
  <div class="container">
   <div class="row">
@@ -16,22 +16,56 @@
              <% else %>
               <%= image_tag 'no_image', size: "200x200" %>
              <% end %>
-             
+
              <%= link_to @book_id.user.name, user_path(@book_id.user.id) %>
          </td>
          <td><%= link_to  @book_id.title, book_path(@book_id.id) %></th>
          <td><%= @book_id.body %></td>
+         <td> <% if @book_id.favorited_by?(current_user) %>
+               <p>
+                 <%= link_to book_favorites_path(@book_id), method: :delete do %>
+                  <i class="fa-solid fa-heart"></i><%= @book_id.favorites.count %> いいね
+                 <% end %>
+               </p>
+              <% else %>
+               <p>
+                 <%= link_to book_favorites_path(@book_id), method: :post do %>
+                  <i class="fa-regular fa-heart"></i><%= @book_id.favorites.count %> いいね
+                 <% end %>
+               </p>
+              <% end %>
+         </td>
+         <td>
+            <p>コメント件数：<%= @book_id.book_comments.count %></p>
+                  <% @book_id.book_comments.each do |book_comment| %>
+                   <p><%= image_tag book_comment.user.get_profile_image(100,100) %></p>
+                      <%= book_comment.user.name %>
+                      <%= book_comment.created_at.strftime('%Y/%m/%d') %><%= book_comment.comment %>
+   
+                    <% if book_comment.user == current_user %>
+                     <%= link_to "Destroy", book_book_comment_path(book_comment.book, book_comment), method: :delete %>
+                    <% end %>
+                  <% end %>
+         </td>
+
          <% if @book_id.user == current_user %>
          <td><%= link_to "Edit", edit_book_path %></td>
          <td>
-          
+
           <%= link_to "Destroy", book_path(@book_id.id), method: :delete, "data-confirm" => "本当に削除しますか？" %>
           <% end %>
          </td>
         </tr>
        </tbody>
      </table>
+     <div>
+      <%= form_with model: [@book_id, @post_comment] do |f| %>
+       <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+       <%= f.submit "送信する" %>
+      <% end %>
+     </div>
    </div>
+
   </div>
  </div>
 </main>
@@ -39,6 +73,6 @@
 
 
 
-      
-        
+
+
 
