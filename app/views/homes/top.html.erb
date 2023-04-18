@@ -15,13 +15,13 @@
          <p>about various books!</p>
          <div class="btn-wrapper col-10 mx-auto">
            <div class="row">
-             <a class = "btn btn-info btn-sm btn-block mb-3 sign_in" href="/users/sign_in">
-               Log in
+             <!-- <a class = "btn btn-info btn-sm btn-block mb-3 sign_in" href=/users/sign_in>-->
+               <%= link_to "Log in", new_user_session_path %>
              </a>
            </div>
            <div class="row">
-             <a class = "btn btn-success btn-sm btn-block mb-3 sign_up" href="/users/sign_up">
-               Sign up
+             <!-- <a class = "btn btn-success btn-sm btn-block mb-3 sign_up" href="/users/sign_up"> -->
+               <%= link_to "Sign up", new_user_registration_path %>
              </a>
            </div>
          </div>
